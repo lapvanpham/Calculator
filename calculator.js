@@ -38,9 +38,12 @@ function handleSymbol(symbol) {
             break;
         case '=':
             if (previousOperator === null) {
-                screen.innerText = buffer;
+                reRender(buffer)
+                return;
             } else {
-                flushOperation(parseInt(buffer))
+                let result = flushOperation(parseInt(buffer));
+                console.log(buffer);
+                reRender(result);
             }
             break;
         case '+':
@@ -81,19 +84,20 @@ function flushOperation(intBuffer) {
         case '÷' :
             runningTotal /= intBuffer;
     }
+    buffer = runningTotal.toString();
+    console.log('flush buffer', buffer);
     return runningTotal;
 }
 
-function init() {
+function powerOn() {
     document.querySelector('.calc-buttons')
         .addEventListener('click', function (event) {
             buttonClick(event.target.innerText);
         })
 }
 
-init();
+powerOn();
 
-//not important
 function reRender(value) {
     screen.innerText = value;
 }
