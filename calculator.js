@@ -2,7 +2,7 @@ let runningTotal = 0;
 let buffer = '0';
 let previousOperator;
 let keyPress = document.querySelector('.key-press');
-const screen = document.querySelector('.screen-display');
+const screenDisplay = document.querySelector('.screen-display');
 
 function buttonClick(value) {
     keyPress.innerText = value;
@@ -20,6 +20,7 @@ function handleNumber(numberString) {
         buffer += numberString;
     }
     reRender(buffer);
+    console.log('handleNumber buffer', buffer);
 }
 
 function handleSymbol(symbol) {
@@ -38,6 +39,7 @@ function handleSymbol(symbol) {
             break;
         case '=':
             if (previousOperator === null) {
+                buffer = 0;
                 reRender(buffer)
                 return;
             } else {
@@ -68,6 +70,7 @@ function handleMath(symbol) {
     }
     previousOperator = symbol;
     buffer = '0';
+    console.log('handleMath buffer', buffer);
 }
 
 function flushOperation(intBuffer) {
@@ -84,8 +87,8 @@ function flushOperation(intBuffer) {
         case '÷' :
             runningTotal /= intBuffer;
     }
-    buffer = runningTotal.toString();
-    console.log('flush buffer', buffer);
+    buffer = '0';
+    console.log('flushOperation buffer', buffer);
     return runningTotal;
 }
 
@@ -99,5 +102,6 @@ function powerOn() {
 powerOn();
 
 function reRender(value) {
-    screen.innerText = value;
+    screenDisplay.innerText = value;
+    console.log(this);
 }
